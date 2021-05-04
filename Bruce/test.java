@@ -1,4 +1,3 @@
-package oneplusone;
 import processing.core.*;
 // grape invinicibility // purple square
 // peach speed boost // blue square
