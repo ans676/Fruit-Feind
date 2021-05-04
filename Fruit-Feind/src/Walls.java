@@ -21,7 +21,7 @@ public class Walls extends PApplet{
 	}
 
 	public void show() {
-		this.canvas.rect(x, y, width, height);
+		this.canvas.line(x, y, width, height);
 	}}
 	
 	      

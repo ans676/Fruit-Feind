@@ -10,22 +10,10 @@ public class Maze extends PApplet{
 	
 	User player; 
 
-	Walls [] wall = {new Walls(this,50, 50, 100, 150), new Walls(this,400, 100, 100, 150),
-			new Walls(this,50, 350, 100, 150), new Walls(this,400, 450, 100, 150), new Walls(this,50, 50, 50, 250), 
-			new Walls(this, 50, 250, 250, 50), new Walls(this,300, 350, 50, 250), new Walls(this,350, 350, 250, 50), 
-			new Walls(this,50, 550, 250, 50), new Walls(this,550, 50, 50, 300)};
-	/*
-	Walls first = new Walls(this,50, 50, 100, 150);
-	Walls second = new Walls(this,400, 100, 100, 150);
-	Walls third = new Walls(this,50, 350, 100, 150);
-	Walls fourth = new Walls(this,400, 450, 100, 150);
-	Walls fifth = new Walls(this,50, 50, 50, 250);
-	Walls sixth = new Walls(this, 50, 250, 250, 50);
-	Walls seventh = new Walls(this,300, 350, 50, 250);
-	Walls eight = new Walls(this,350, 350, 250, 50);
-	Walls ninth = new Walls(this,50, 550, 250, 50);
-	Walls tenth = new Walls(this,550, 50, 50, 300);
-	*/ 
+	Walls [] wall = {new Walls(this,50, 50, 50, 450), new Walls(this,50, 450, 300, 450),
+			new Walls(this,300, 450, 300, 550), new Walls(this,300, 550, 50, 550), new Walls(this,150, 50, 250, 50), 
+			new Walls(this, 250, 50, 250, 150), new Walls(this,250, 150, 550, 150), new Walls(this,550, 150, 550, 450), 
+			new Walls(this, 450, 550, 450, 250), new Walls(this,450, 250, 150, 250)};
 	
 	
 	public static void main(String[] args) {
@@ -44,6 +32,9 @@ public class Maze extends PApplet{
 		player = new User(this);
 		
 		
+	}
+	public boolean collision() {
+		if (player.xpos == )
 	}
 	
 	public void keyPressed() {
@@ -69,8 +60,10 @@ public class Maze extends PApplet{
 	
 	
 	public void draw() {
+		
 		for (int i = 0; i < wall.length; i++) {
-			fill(10 + i*10);
+			strokeWeight(10);
+			//fill(10 + i*10);
 			wall[i].show();
 		}
 		

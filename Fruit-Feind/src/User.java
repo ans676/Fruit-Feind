@@ -41,18 +41,14 @@ public class User extends PApplet{
 		xpos = constrain(xpos, 0, sizeX);
 	}
 	
-	public void constrainVariables(float leftX, float rightX, float topY, float bottomY) {
-		//System.out.println("box : " + leftX + rightX + topY + bottomY );
-		
+	/*public void constrainVariables(float leftX, float rightX, float topY, float bottomY) {		
 		xpos = constrain(xpos, 0, leftX);
 		xpos = constrain(xpos, rightX, sizeX);
 		ypos = constrain(ypos, 0, bottomY);
 		ypos = constrain(ypos, topY, sizeY);
 		
 		//player.constrainVariables(wall[i].x, wall[i].x + wall[i].width, wall[i].y, wall[i].y + wall[i].height);
-
-	
-	}
+	}*/
 		 
 	
 	public void show() {
