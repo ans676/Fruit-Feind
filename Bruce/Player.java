@@ -1,4 +1,3 @@
-package oneplusone;
 public class Player extends Rectangle{
 	float speed=4;
 	Player(float a, float b, float c, float d) {super(a, b, c, d);}
