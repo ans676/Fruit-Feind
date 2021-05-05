@@ -6,6 +6,9 @@ import processing.core.*;
 // fodder : turquoise
 // player pink : invicibile
 public class test extends PApplet{
+	public static void main(String []args) {
+		PApplet.main("test");
+	}
 	Rectangle[] walls = new Rectangle[] {
 		    //first 4 are border walls
 		    new Rectangle(0, 0, 500, 20),
@@ -25,9 +28,12 @@ public class test extends PApplet{
 	Player e=new Player(350,325,20,20);
 	boolean boostShow=true, grapeShow=true, fodderShow=true, gameOver=false;
 	int level=0, direction;
+	public void settings() {
+		size(500,500);
+	}
 	@Override
 	public void setup() {
-		size(500,500);
+		
 		imageMode(CENTER);
 		e.setSpeed(5);
 	}
