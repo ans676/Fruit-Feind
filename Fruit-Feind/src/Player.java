@@ -1,8 +1,12 @@
+
 public class Player extends Rectangle{
 	
-	float speed = 6;
+	float speed = 10;
 	
-	Player(float a, float b, float c, float d) {super(a, b, c, d);}
+	Player(float a, float b, float c, float d) {
+		super(a, b, c, d);
+	}
+	
 	void moveUp() {y-=speed;}
 	void moveDown() {y+=speed;}
 	void moveRight() {x+=speed;}

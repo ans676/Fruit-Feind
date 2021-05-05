@@ -1,4 +1,4 @@
-import processing.core.*;
+/*import processing.core.*;
 
 public class Walls extends PApplet{
 
@@ -22,7 +22,7 @@ public class Walls extends PApplet{
 
 	public void show() {
 		this.canvas.line(x, y, x2, y2);
-	}}
+	}}*/
 	
 	      
 	

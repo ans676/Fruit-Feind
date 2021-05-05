@@ -1,4 +1,4 @@
-import processing.core.*;
+/*import processing.core.*;
 
 
 
@@ -138,5 +138,5 @@ public class Maze extends PApplet{
 	 	
 	 	} 
 	}
-	 
+	 */
 	

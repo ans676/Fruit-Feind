@@ -8,46 +8,59 @@ import processing.core.*;
 // player pink : invicibile
 
 public class test extends PApplet{
-	public static void main(String []args) {
-		PApplet.main("test");
-	}
-	
+
 	
 	Rectangle[] walls = new Rectangle[] {
 		    //first 4 are border walls
-		    new Rectangle(0, 0, 500, 20),
-		    new Rectangle(480, 0, 20, 500),
-		    new Rectangle(0, 480, 500, 20),
-		    new Rectangle(100, 100, 50, 100),
-		    new Rectangle(400, 100, 100, 50),
-		    new Rectangle(100, 400, 100, 50),
-		    new Rectangle(350, 350, 50, 100),
-		    new Rectangle(250, 200, 50, 100),
-		    new Rectangle(0, 0, 20, 500)
-		};
+		    new Rectangle(0, 0, 500, 20), new Rectangle(480, 0, 20, 500),
+		    new Rectangle(0, 480, 500, 20), new Rectangle(100, 100, 50, 100),
+		    new Rectangle(400, 100, 100, 50), new Rectangle(100, 400, 100, 50),
+		    new Rectangle(350, 350, 50, 100), new Rectangle(250, 200, 50, 100),
+		    new Rectangle(0, 0, 20, 500)};
 	
-	Rectangle boost=new Rectangle(25, 250, 20, 20);
-	Rectangle grape=new Rectangle(250, 400, 20, 20);
-	Rectangle fodder=new Rectangle(400, 250, 20, 20);
+	Rectangle[] wallLevelTwo = {new Rectangle(200, 100, 20, 250), 
+								new Rectangle(250, 55, 100, 50), new Rectangle(75, 300, 50, 150)};
 	
-	Rectangle points = new Rectangle (50, 50, 5, 5);
+	Points[] points = {new Points(50,50), new Points(67,235), new Points(234,223), 
+			new Points(43,500), new Points(27,345), new Points(400,50), new Points(330,420),
+			new Points(440,300), new Points(290, 400), new Points(345,242),new Points(350,475),
+			new Points(465,400), new Points(340,25), new Points(379,239), new Points(414,437)};
 	
-	Player p=new Player(25,25,20,20);
-	Player e=new Player(350,325,20,20);
 	
-	boolean boostShow=true, grapeShow=true, fodderShow=true, gameOver=false, pointsShow = true;
 	
-	int level=0, direction, score = 0;
+
+		
+	
+
+	Rectangle boost = new Rectangle(25, 250, 20, 20);
+	Rectangle grape = new Rectangle(250, 400, 20, 20);
+	Rectangle fodder = new Rectangle(400, 250, 20, 20);
+	
+	//Rectangle points = new Rectangle (50, 50, 5, 5);
+	
+	Player p = new Player(25,25,20,20);
+	Player enemy = new Player(350,325,20,20);
+	
+	boolean boostShow = true, grapeShow = true, fodderShow =  true, gameOver = false, pointsShow = true;
+	
+	int level = 1, score = 0, direction;
+	
+	
+	
+	public static void main(String [] args) {
+		PApplet.main("test");
+	}
+	
 	
 	public void settings() {
 		size(500,500);
 	}
 	
-	@Override
 	public void setup() {
-		
 		imageMode(CENTER);
-		e.setSpeed(5);
+		enemy.setSpeed(5);
+		
+		initializeArray(points);
 	}
 	
 	void drawLabels() {
@@ -58,16 +71,20 @@ public class test extends PApplet{
 		if(boostShow) text("speed boost", 25, 280);
 	}
 	
+	//this might need to change
 	void collectAll() {
-		if(!gameOver) gameOver=!boostShow&&!grapeShow&&!fodderShow;
-		if(gameOver) level++;
+		if(!gameOver) 
+			gameOver = !boostShow && !grapeShow && !fodderShow;
+		if(gameOver) 
+			level++;
 	}
 	
 	void collideEnemy() {
-		if(collision(p, e)&&grapeShow) {
-			gameOver=true; level=100;
+		if(collision(p, enemy) && grapeShow) {
+			gameOver=true; 
+			level = 100;
 		}
-	}
+	} 
 	
 	void collideGrape() {
 		if(collision(p, grape)) {
@@ -89,12 +106,6 @@ public class test extends PApplet{
 		}
 	}
 	
-	void collidePoints() {
-		if(collision(p, points) && pointsShow == true) {
-			score++; 
-			pointsShow=false;
-		}
-	}
 	
 	
 	void drawBoost() {
@@ -110,7 +121,8 @@ public class test extends PApplet{
 	}
 	
 	void drawFodder() {
-		if(!fodderShow) return;
+		if(!fodderShow) 
+			return;
 		fill(0,255,255);
 		rect(fodder.x,fodder.y,fodder.w,fodder.h);
 	}
@@ -118,18 +130,15 @@ public class test extends PApplet{
 	void drawScore() {
 		fill(0);
 		textSize(10); 
-		text("level:"+(level+1), 440, 65);
+		text("level:"+(level), 440, 65);
 		text("score:" + (score), 435, 75);
 	}
 	
-	void drawPoints() {
-		if(!pointsShow) return;
-		fill(250, 250, 0);
-		rect(points.x, points.y, points.w, points.h);
-	}
+	
 	
 	@Override
 	public void draw() {
+		
 		background(255);
 		if(!gameOver) {
 			drawPlayer();
@@ -139,68 +148,77 @@ public class test extends PApplet{
 			drawBoost();
 			drawGrape();
 			drawFodder();
-			drawPoints();
 			collideBoost();
 			collideFodder();
 			collideGrape();
 			collideEnemy();
-			collidePoints();
 			collectAll(); 
 			drawScore();
 			drawLabels();
+			for (Points parray: points) {
+				drawPoints(parray.getX(), parray.getY(), parray);
+				collidePoints(parray, parray.getBoolean(), parray.pointsShow);
+				
+
+				
+			}
 		}
 		
-		else if(level<3){
+		else if(level <= 4){
 			resetLevel();
 		}
 		
 		else {
 			fill(0);
 			textSize(26); 
-			if(level==3) {
+			if( level == 5 ) {
 				text("Win", 250, 250);
 			}
 			else {
 				text("Game Over", 250, 250);
+				text("Score: " + score, 100, 100);
 			}
 		}
 	}
+	
+	
 	void resetLevel() {
-		boostShow=true; grapeShow=true; fodderShow=true; gameOver=false;
-		p=new Player(25,25,20,20); e=new Player(350,325,20,20); e.setSpeed(level*2+5); 
+		boostShow = true; grapeShow = true; fodderShow = true; gameOver = false;
+		
+		p = new Player(25,25,20,20); enemy = new Player(350,325,20,20); enemy.setSpeed(level*2+3);
+		
+		for (Points newPoints : points) {
+			newPoints.changeBoolean(true);
+		}
 	}
 	
 	
 	void moveEnemy() {
 		if(frameCount%120==0) changeDirection();
 		if(direction==0) {
-			e.moveUp();
-			if(collide(e)) {
-				e.moveDown();
+			enemy.moveUp();
+			if(collide(enemy)) {
+				enemy.moveDown();
 				changeDirection();
-			}
-		}
+			}}
 		if(direction==1) {
-			e.moveDown();
-			if(collide(e)) {
-				e.moveUp();
+			enemy.moveDown();
+			if(collide(enemy)) {
+				enemy.moveUp();
 				changeDirection();
-			}
-		}
+			}}
 		if(direction==2) {
-			e.moveLeft();
-			if(collide(e)) {
-				e.moveRight();
+			enemy.moveLeft();
+			if(collide(enemy)) {
+				enemy.moveRight();
 				changeDirection();
-			}
-		}
+			}}
 		if(direction==3) {
-			e.moveRight();
-			if(collide(e)) {
-				e.moveLeft();
+			enemy.moveRight();
+			if(collide(enemy)) {
+				enemy.moveLeft();
 				changeDirection();
-			}
-		}
+			}}
 	}
 	
 	void changeDirection() {
@@ -221,15 +239,23 @@ public class test extends PApplet{
 	
 	void drawEnemy() {
 		fill(255,0,0);
-		rect(e.x,e.y,e.w,e.h);
+		rect(enemy.x, enemy.y, enemy.w, enemy.h);
 	}
 	
 	void drawWalls() {
 		fill(0);
 		for(Rectangle r:walls) rect(r.x,r.y,r.w,r.h);
+		if (level >= 3) {
+			for(Rectangle r:wallLevelTwo) rect(r.x,r.y,r.w,r.h);
+		}
 	}
 	
-	@Override
+	public void drawPoints(float x, float y, Points pbool) {
+		if(!pbool.getBoolean()) return;
+		fill(250, 250, 0);
+		rect(x, y, 5, 5);
+	}
+	
 	public void keyPressed() {
 		if(keyCode== UP) {
 			p.moveUp();
@@ -248,15 +274,31 @@ public class test extends PApplet{
 			if(collide(p)) p.moveLeft();
 		}
 	}
+	
 	boolean overlap(float start1, float end1, float start2, float end2) {
 		return end2>=start1 && start2<=end1;
 	}
+	
 	boolean collision(Rectangle r1, Rectangle r2) {
 		return overlap(r1.getX(),r1.getX()+r1.getW(),r2.getX(),r2.getX()+r2.getW())
 				&& overlap(r1.getY(),r1.getY()+r1.getH(),r2.getY(),r2.getY()+r2.getH());
 	}
+	
 	boolean collide(Player p) {
 		for(Rectangle r:walls) if(collision(r,p)) return true;
 		return false;
+	}
+	
+	void collidePoints(Points point, boolean show, boolean change) {
+		if(collision(p, point) && show == true) {
+			score++; 
+			point.changeBoolean(false);
+		}
+	}
+	
+	void initializeArray (Points [] points) {
+		for (Points newPoints : points) {
+			newPoints = new Points((float)Math.random()*500, (float)Math.random()*500);
+		}
 	}
 }
