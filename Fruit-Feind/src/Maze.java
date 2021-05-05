@@ -16,6 +16,7 @@ public class Maze extends PApplet{
 			new Walls(this, 450, 550, 450, 250), new Walls(this,450, 250, 150, 250)};
 	
 	
+	
 	public static void main(String[] args) {
 		PApplet.main("Maze");
 		
@@ -34,7 +35,7 @@ public class Maze extends PApplet{
 		
 	}
 	
-	public void keyPressed() {
+	 public void keyPressed() {
 		if(keyCode == UP) {
 			if (checkCollision(player.xpos, player.ypos, wall, -2)) {
 				System.out.print("Collision");
@@ -108,7 +109,7 @@ public class Maze extends PApplet{
 				}}
 			}
 			else if (wallList[i].y == wallList[i].y2 ) {
-				System.out.print("y's equal ");
+				System.out.print("y's equal");
 				System.out.println("Wall" + i + " " + wallX1 + " " + wallX2 + " " + wallY1 + " " + wallY2);
 
 				if (playerY == wallY1 + step) {
@@ -135,7 +136,7 @@ public class Maze extends PApplet{
 	 	player.show(); 
 	 	player.update();
 	 	
-	 	}
+	 	} 
 	}
 	 
 	
