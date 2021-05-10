@@ -21,12 +21,12 @@ public class test extends PApplet{
 		    new Rectangle(250, 200, 50, 100),
 		    new Rectangle(0, 0, 20, 500)
 		};
-	Rectangle boost=new Rectangle(25, 250, 20, 20);
+	Rectangle peach=new Rectangle(25, 250, 20, 20);
 	Rectangle grape=new Rectangle(250, 400, 20, 20);
 	Rectangle cherry=new Rectangle(400, 250, 20, 20);
 	Player p=new Player(25,25,20,20);
 	Player e=new Player(350,325,20,20);
-	boolean boostShow=true, grapeShow=true, cherryShow=true, gameOver=false;
+	boolean peachShow=true, grapeShow=true, cherryShow=true, gameOver=false;
 	int level=0, direction;
 	public void settings() {
 		size(500,500);
@@ -42,10 +42,10 @@ public class test extends PApplet{
 		textSize(10); 
 		if(cherryShow) text("cherry", 400, 280);
 		if(grapeShow) text("invicibility", 250, 430);
-		if(boostShow) text("speed boost", 25, 280);
+		if(peachShow) text("speed boost", 25, 280);
 	}
 	void collectAll() {
-		if(!gameOver) gameOver=!boostShow&&!grapeShow&&!cherryShow;
+		if(!gameOver) gameOver=!peachShow&&!grapeShow&&!cherryShow;
 		if(gameOver) level++;
 	}
 	void collideEnemy() {
@@ -64,27 +64,33 @@ public class test extends PApplet{
 			cherryShow=false;
 		}
 	}
-	void collideBoost() {
-		if(collision(p, boost)) {
+	void collidePeach() {
+		if(collision(p, peach)) {
 			p.setSpeed(10);
-			boostShow=false;
+			peachShow=false;
 		}
 	}
-	void drawBoost() {
-		if(!boostShow) return;
-		fill(0,0,255);
-		rect(boost.x,boost.y,boost.w,boost.h);
+	void drawPeach() {
+		if(!peachShow) return;
+		PImage peach;
+		peach = loadImage("peach.png");
+		image(peach, peach.x, peach.y, peach.w, peach.h);
+	
 	}
 	void drawGrape() {
 		if(!grapeShow) return;
-		fill(255,0,255);
-		rect(grape.x,grape.y,grape.w,grape.w);
+		PImage grape;
+		grape = loadImage("grape.png");
+		image(grape,grape.x, grape.y, grape.w, grape.h);
+		
 	}
 	void drawCherry() {
-		if(!CherryShow) return;
-		fill(0,255,255);
-		rect(cherry.x,cherry.y,cherry.w,cherry.h);
+		if(!cherryShow) return;
+		PImage cherry;
+		cherry = loadImage("cherry.png");
+		image(cherry,cherry.x, cherry.y, cherry.w, cherry.h);
 	}
+	
 	void drawScore() {
 		fill(0);
 		textSize(10); 
@@ -98,10 +104,10 @@ public class test extends PApplet{
 			drawEnemy();
 			moveEnemy();
 			drawWalls();
-			drawBoost();
+			drawPeach();
 			drawGrape();
 			drawCherry();
-			collideBoost();
+			collidePeach();
 			collideCherry();
 			collideGrape();
 			collideEnemy();
@@ -124,7 +130,7 @@ public class test extends PApplet{
 		}
 	}
 	void resetLevel() {
-		boostShow=true; grapeShow=true; cherryShow=true; gameOver=false;
+		PeachShow=true; grapeShow=true; cherryShow=true; gameOver=false;
 		p=new Player(25,25,20,20); e=new Player(350,325,20,20); e.setSpeed(level*2+5); 
 	}
 	void moveEnemy() {
