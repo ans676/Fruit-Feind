@@ -1,7 +1,7 @@
 
 public class Player extends Rectangle{
 	
-	float speed = 10;
+	float speed = 10F;
 	
 	Player(float a, float b, float c, float d) {
 		super(a, b, c, d);

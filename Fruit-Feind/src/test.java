@@ -1,10 +1,10 @@
 import processing.core.*;
 
-// grape invinicibility // purple square
+// grape invinvibility // purple square
 // peach speed boost // blue square
 // pac man : green square
 // enemy: red square
-// fodder : turquoise
+// cherry : turquoise
 // player pink : invicibile
 
 public class test extends PApplet{
@@ -32,16 +32,16 @@ public class test extends PApplet{
 		
 	
 
-	Rectangle boost = new Rectangle(25, 250, 20, 20);
+	Rectangle peach = new Rectangle(25, 250, 20, 20);
 	Rectangle grape = new Rectangle(250, 400, 20, 20);
-	Rectangle fodder = new Rectangle(400, 250, 20, 20);
+	Rectangle cherry = new Rectangle(400, 250, 20, 20);
 	
 	//Rectangle points = new Rectangle (50, 50, 5, 5);
 	
 	Player p = new Player(25,25,20,20);
 	Player enemy = new Player(350,325,20,20);
 	
-	boolean boostShow = true, grapeShow = true, fodderShow =  true, gameOver = false, pointsShow = true;
+	boolean peachShow = true, grapeShow = true, cherryShow =  true, gameOver = false, pointsShow = true;
 	
 	int level = 1, score = 0, direction;
 	
@@ -66,15 +66,15 @@ public class test extends PApplet{
 	void drawLabels() {
 		fill(0);
 		textSize(10); 
-		if(fodderShow) text("fodder", 400, 280);
+		if(cherryShow) text("cherry", 400, 280);
 		if(grapeShow) text("invincibility", 250, 430);
-		if(boostShow) text("speed boost", 25, 280);
+		if(peachShow) text("speed boost", 25, 280);
 	}
 	
 	//this might need to change
 	void collectAll() {
 		if(!gameOver) 
-			gameOver = !boostShow && !grapeShow && !fodderShow;
+			gameOver = !peachShow && !grapeShow && !cherryShow;
 		if(gameOver) 
 			level++;
 	}
@@ -93,38 +93,42 @@ public class test extends PApplet{
 		}
 	}
 	
-	void collideFodder() {
-		if(collision(p, fodder)) {
-			fodderShow=false;
+	void collideCherry() {
+		if(collision(p, cherry)) {
+			cherryShow=false;
 		}
 	}
 	
-	void collideBoost() {
-		if(collision(p, boost)) {
+	void collidePeach() {
+		if(collision(p, peach)) {
 			p.setSpeed(10);
-			boostShow=false;
+			peachShow=false;
 		}
 	}
 	
 	
 	
-	void drawBoost() {
-		if(!boostShow) return;
-		fill(0,0,255);
-		rect(boost.x,boost.y,boost.w,boost.h);
+	void drawPeach() {
+		if(!peachShow) return;
+		PImage peach;
+		peach = loadImage("peach.png");
+		image(peach, 25, 250, 40, 40);
+
 	}
 	
 	void drawGrape() {
 		if(!grapeShow) return;
-		fill(255,0,255);
-		rect(grape.x,grape.y,grape.w,grape.w);
+		PImage grape;
+		grape = loadImage("grape.png");
+		image(grape, 250, 400, 40, 40);
 	}
 	
-	void drawFodder() {
-		if(!fodderShow) 
-			return;
-		fill(0,255,255);
-		rect(fodder.x,fodder.y,fodder.w,fodder.h);
+	void drawCherry() {
+		if(!cherryShow) return;
+		PImage cherry;
+		cherry = loadImage("cherry.png");
+		image(cherry, 400, 250, 40, 40);
+
 	}
 	
 	void drawScore() {
@@ -145,11 +149,11 @@ public class test extends PApplet{
 			drawEnemy();
 			moveEnemy();
 			drawWalls();
-			drawBoost();
+			drawPeach();
 			drawGrape();
-			drawFodder();
-			collideBoost();
-			collideFodder();
+			drawCherry();
+			collidePeach();
+			collideCherry();
 			collideGrape();
 			collideEnemy();
 			collectAll(); 
@@ -183,7 +187,7 @@ public class test extends PApplet{
 	
 	
 	void resetLevel() {
-		boostShow = true; grapeShow = true; fodderShow = true; gameOver = false;
+		peachShow = true; grapeShow = true; cherryShow = true; gameOver = false;
 		
 		p = new Player(25,25,20,20); enemy = new Player(350,325,20,20); enemy.setSpeed(level*2+3);
 		
@@ -234,19 +238,19 @@ public class test extends PApplet{
 		else{
 			fill(50,50,50);
 		}
-		rect(p.x,p.y,p.w,p.h);
+		rect(p.x,p.y,p.width,p.height);
 	}
 	
 	void drawEnemy() {
 		fill(255,0,0);
-		rect(enemy.x, enemy.y, enemy.w, enemy.h);
+		rect(enemy.x, enemy.y, enemy.width, enemy.height);
 	}
 	
 	void drawWalls() {
 		fill(0);
-		for(Rectangle r:walls) rect(r.x,r.y,r.w,r.h);
+		for(Rectangle r:walls) rect(r.x,r.y,r.width,r.height);
 		if (level >= 3) {
-			for(Rectangle r:wallLevelTwo) rect(r.x,r.y,r.w,r.h);
+			for(Rectangle r:wallLevelTwo) rect(r.x,r.y,r.width,r.height);
 		}
 	}
 	
