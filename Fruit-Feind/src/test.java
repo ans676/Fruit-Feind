@@ -41,7 +41,7 @@ public class test extends PApplet{
 	Player p = new Player(25,25,20,20);
 	Player enemy = new Player(350,325,20,20);
 	
-	boolean peachShow = true, grapeShow = true, cherryShow =  true, gameOver = false, pointsShow = true;
+	boolean peachShow = true, grapeShow = true, cherryShow =  true, gameOver = false, pointsShow = true titleShow = true;
 	
 	int level = 1, score = 0, direction;
 	
@@ -138,6 +138,19 @@ public class test extends PApplet{
 		text("score:" + (score), 435, 75);
 	}
 	
+	void titleShow(){
+  		if(!titleShow) return;
+		PImage title;
+  		title = loadImage("title.png"); 
+		image(title, 0, 0);
+  		String s = "Press X to continue";
+  		print(s)
+}
+
+	void keyPressed(){
+  		if (key == 'x' || key == 'X')
+  		titleShow = false
+}
 	
 	
 	@Override
