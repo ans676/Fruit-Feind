@@ -3,7 +3,7 @@ import processing.core.*;
 // peach speed boost // blue square
 // pac man : green square
 // enemy: red square
-// fodder : turquoise
+// cherry : turquoise
 // player pink : invicibile
 public class test extends PApplet{
 	public static void main(String []args) {
@@ -23,10 +23,10 @@ public class test extends PApplet{
 		};
 	Rectangle boost=new Rectangle(25, 250, 20, 20);
 	Rectangle grape=new Rectangle(250, 400, 20, 20);
-	Rectangle fodder=new Rectangle(400, 250, 20, 20);
+	Rectangle cherry=new Rectangle(400, 250, 20, 20);
 	Player p=new Player(25,25,20,20);
 	Player e=new Player(350,325,20,20);
-	boolean boostShow=true, grapeShow=true, fodderShow=true, gameOver=false;
+	boolean boostShow=true, grapeShow=true, cherryShow=true, gameOver=false;
 	int level=0, direction;
 	public void settings() {
 		size(500,500);
@@ -40,12 +40,12 @@ public class test extends PApplet{
 	void drawLabels() {
 		fill(0);
 		textSize(10); 
-		if(fodderShow) text("fodder", 400, 280);
+		if(cherryShow) text("cherry", 400, 280);
 		if(grapeShow) text("invicibility", 250, 430);
 		if(boostShow) text("speed boost", 25, 280);
 	}
 	void collectAll() {
-		if(!gameOver) gameOver=!boostShow&&!grapeShow&&!fodderShow;
+		if(!gameOver) gameOver=!boostShow&&!grapeShow&&!cherryShow;
 		if(gameOver) level++;
 	}
 	void collideEnemy() {
@@ -59,9 +59,9 @@ public class test extends PApplet{
 			grapeShow=false;
 		}
 	}
-	void collideFodder() {
-		if(collision(p, fodder)) {
-			fodderShow=false;
+	void collideCherry() {
+		if(collision(p, cherry)) {
+			cherryShow=false;
 		}
 	}
 	void collideBoost() {
@@ -80,10 +80,10 @@ public class test extends PApplet{
 		fill(255,0,255);
 		rect(grape.x,grape.y,grape.w,grape.w);
 	}
-	void drawFodder() {
-		if(!fodderShow) return;
+	void drawCherry() {
+		if(!CherryShow) return;
 		fill(0,255,255);
-		rect(fodder.x,fodder.y,fodder.w,fodder.h);
+		rect(cherry.x,cherry.y,cherry.w,cherry.h);
 	}
 	void drawScore() {
 		fill(0);
@@ -100,9 +100,9 @@ public class test extends PApplet{
 			drawWalls();
 			drawBoost();
 			drawGrape();
-			drawFodder();
+			drawCherry();
 			collideBoost();
-			collideFodder();
+			collideCherry();
 			collideGrape();
 			collideEnemy();
 			collectAll(); 
@@ -124,7 +124,7 @@ public class test extends PApplet{
 		}
 	}
 	void resetLevel() {
-		boostShow=true; grapeShow=true; fodderShow=true; gameOver=false;
+		boostShow=true; grapeShow=true; cherryShow=true; gameOver=false;
 		p=new Player(25,25,20,20); e=new Player(350,325,20,20); e.setSpeed(level*2+5); 
 	}
 	void moveEnemy() {
