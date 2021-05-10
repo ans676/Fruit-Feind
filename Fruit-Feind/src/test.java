@@ -74,8 +74,8 @@ public class test extends PApplet{
 	}
 	
 	void collideCherry() {
-		if(collision(p, Cherry)) {
-			CherryShow=false;
+		if(collision(p, cherry)) {
+			cherryShow=false;
 		}
 	}
 	
