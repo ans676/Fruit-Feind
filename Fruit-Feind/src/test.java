@@ -1,4 +1,5 @@
-import processing.core.*;
+import processing.core.PApplet;
+import processing.core.PImage;
 
 // grape invinvibility // purple square
 // peach speed boost // blue square
@@ -9,60 +10,61 @@ import processing.core.*;
 
 public class test extends PApplet{
 
-	
+
 	Rectangle[] walls = new Rectangle[] {
-		    //first 4 are border walls
-		    new Rectangle(0, 0, 500, 20), new Rectangle(480, 0, 20, 500),
-		    new Rectangle(0, 480, 500, 20), new Rectangle(100, 100, 50, 100),
-		    new Rectangle(400, 100, 100, 50), new Rectangle(100, 400, 100, 50),
-		    new Rectangle(350, 350, 50, 100), new Rectangle(250, 200, 50, 100),
-		    new Rectangle(0, 0, 20, 500)};
-	
+			//first 4 are border walls
+			new Rectangle(0, 0, 500, 20), new Rectangle(480, 0, 20, 500),
+			new Rectangle(0, 480, 500, 20), new Rectangle(100, 100, 50, 100),
+			new Rectangle(400, 100, 100, 50), new Rectangle(100, 400, 100, 50),
+			new Rectangle(350, 350, 50, 100), new Rectangle(250, 200, 50, 100),
+			new Rectangle(0, 0, 20, 500)};
+
 	Rectangle[] wallLevelTwo = {new Rectangle(200, 100, 20, 250), 
-								new Rectangle(250, 55, 100, 50), new Rectangle(75, 300, 50, 150)};
-	
+			new Rectangle(250, 55, 100, 50), new Rectangle(75, 300, 50, 150)};
+
 	Points[] points = {new Points(50,50), new Points(67,235), new Points(234,223), 
 			new Points(43,500), new Points(27,345), new Points(400,50), new Points(330,420),
 			new Points(440,300), new Points(290, 400), new Points(345,242),new Points(350,475),
 			new Points(465,400), new Points(340,25), new Points(379,239), new Points(414,437)};
-	
-	
-	
 
-		
-	
+
+
+
+
+
 
 	Rectangle peach = new Rectangle(25, 250, 20, 20);
 	Rectangle grape = new Rectangle(250, 400, 20, 20);
 	Rectangle cherry = new Rectangle(400, 250, 20, 20);
-	
+
 	//Rectangle points = new Rectangle (50, 50, 5, 5);
-	
+
 	Player p = new Player(25,25,20,20);
 	Player enemy = new Player(350,325,20,20);
-	
-	boolean peachShow = true, grapeShow = true, cherryShow =  true, gameOver = false, pointsShow = true titleShow = true;
-	
+
+	boolean peachShow = true, grapeShow = true, cherryShow =  true, gameOver = false, pointsShow = true, start=true;
+
 	int level = 1, score = 0, direction;
-	
-	
-	
+
+
+
 	public static void main(String [] args) {
 		PApplet.main("test");
 	}
-	
-	
+	//	
+
 	public void settings() {
 		size(500,500);
 	}
-	
+
 	public void setup() {
+		//		size(500,500);
 		imageMode(CENTER);
 		enemy.setSpeed(5);
-		
+
 		initializeArray(points);
 	}
-	
+
 	void drawLabels() {
 		fill(0);
 		textSize(10); 
@@ -70,7 +72,7 @@ public class test extends PApplet{
 		if(grapeShow) text("invincibility", 250, 430);
 		if(peachShow) text("speed boost", 25, 280);
 	}
-	
+
 	//this might need to change
 	void collectAll() {
 		if(!gameOver) 
@@ -78,36 +80,36 @@ public class test extends PApplet{
 		if(gameOver) 
 			level++;
 	}
-	
+
 	void collideEnemy() {
 		if(collision(p, enemy) && grapeShow) {
 			gameOver=true; 
 			level = 100;
 		}
 	} 
-	
+
 	void collideGrape() {
 		if(collision(p, grape)) {
 			// enemy thing
 			grapeShow=false;
 		}
 	}
-	
+
 	void collideCherry() {
 		if(collision(p, cherry)) {
 			cherryShow=false;
 		}
 	}
-	
+
 	void collidePeach() {
 		if(collision(p, peach)) {
 			p.setSpeed(10);
 			peachShow=false;
 		}
 	}
-	
-	
-	
+
+
+
 	void drawPeach() {
 		if(!peachShow) return;
 		PImage peach;
@@ -115,14 +117,14 @@ public class test extends PApplet{
 		image(peach, 25, 250, 40, 40);
 
 	}
-	
+
 	void drawGrape() {
 		if(!grapeShow) return;
 		PImage grape;
 		grape = loadImage("grape.png");
 		image(grape, 250, 400, 40, 40);
 	}
-	
+
 	void drawCherry() {
 		if(!cherryShow) return;
 		PImage cherry;
@@ -130,34 +132,25 @@ public class test extends PApplet{
 		image(cherry, 400, 250, 40, 40);
 
 	}
-	
+	void drawTit() {
+		PImage tit=loadImage("title.png");
+		image(tit, 250, 250, 500, 500);
+	}
+
 	void drawScore() {
 		fill(0);
 		textSize(10); 
 		text("level:"+(level), 440, 65);
 		text("score:" + (score), 435, 75);
 	}
-	
-	void titleShow(){
-  		if(!titleShow) return;
-		PImage title;
-  		title = loadImage("title.png"); 
-		image(title, 0, 0);
-  		String s = "Press X to continue";
-  		print(s)
-}
 
-	void keyPressed(){
-  		if (key == 'x' || key == 'X')
-  		titleShow = false
-}
-	
-	
 	@Override
 	public void draw() {
-		
 		background(255);
-		if(!gameOver) {
+		if(start) {
+			drawTit();
+		}
+		else if(!gameOver) {
 			drawPlayer();
 			drawEnemy();
 			moveEnemy();
@@ -175,16 +168,14 @@ public class test extends PApplet{
 			for (Points parray: points) {
 				drawPoints(parray.getX(), parray.getY(), parray);
 				collidePoints(parray, parray.getBoolean(), parray.pointsShow);
-				
 
-				
 			}
 		}
-		
+
 		else if(level <= 4){
 			resetLevel();
 		}
-		
+
 		else {
 			fill(0);
 			textSize(26); 
@@ -197,19 +188,19 @@ public class test extends PApplet{
 			}
 		}
 	}
-	
-	
+
+
 	void resetLevel() {
 		peachShow = true; grapeShow = true; cherryShow = true; gameOver = false;
-		
+
 		p = new Player(25,25,20,20); enemy = new Player(350,325,20,20); enemy.setSpeed(level*2+3);
-		
+
 		for (Points newPoints : points) {
 			newPoints.changeBoolean(true);
 		}
 	}
-	
-	
+
+
 	void moveEnemy() {
 		if(frameCount%120==0) changeDirection();
 		if(direction==0) {
@@ -237,13 +228,13 @@ public class test extends PApplet{
 				changeDirection();
 			}}
 	}
-	
+
 	void changeDirection() {
 		int temp=(int)(Math.random()*4);
 		while(direction==temp) temp=(int)(Math.random()*4);
 		direction=temp;
 	}
-	
+
 	void drawPlayer() {
 		if(grapeShow) {
 			fill(0,255,0);
@@ -253,12 +244,12 @@ public class test extends PApplet{
 		}
 		rect(p.x,p.y,p.width,p.height);
 	}
-	
+
 	void drawEnemy() {
 		fill(255,0,0);
 		rect(enemy.x, enemy.y, enemy.width, enemy.height);
 	}
-	
+
 	void drawWalls() {
 		fill(0);
 		for(Rectangle r:walls) rect(r.x,r.y,r.width,r.height);
@@ -266,13 +257,16 @@ public class test extends PApplet{
 			for(Rectangle r:wallLevelTwo) rect(r.x,r.y,r.width,r.height);
 		}
 	}
-	
+
 	public void drawPoints(float x, float y, Points pbool) {
 		if(!pbool.getBoolean()) return;
 		fill(250, 250, 0);
 		rect(x, y, 5, 5);
 	}
-	
+	@Override
+	public void mousePressed() {
+		if(mousePressed&&frameCount>3) start=false;
+	}
 	public void keyPressed() {
 		if(keyCode== UP) {
 			p.moveUp();
@@ -291,28 +285,28 @@ public class test extends PApplet{
 			if(collide(p)) p.moveLeft();
 		}
 	}
-	
+
 	boolean overlap(float start1, float end1, float start2, float end2) {
 		return end2>=start1 && start2<=end1;
 	}
-	
+
 	boolean collision(Rectangle r1, Rectangle r2) {
 		return overlap(r1.getX(),r1.getX()+r1.getW(),r2.getX(),r2.getX()+r2.getW())
 				&& overlap(r1.getY(),r1.getY()+r1.getH(),r2.getY(),r2.getY()+r2.getH());
 	}
-	
+
 	boolean collide(Player p) {
 		for(Rectangle r:walls) if(collision(r,p)) return true;
 		return false;
 	}
-	
+
 	void collidePoints(Points point, boolean show, boolean change) {
 		if(collision(p, point) && show == true) {
 			score++; 
 			point.changeBoolean(false);
 		}
 	}
-	
+
 	void initializeArray (Points [] points) {
 		for (Points newPoints : points) {
 			newPoints = new Points((float)Math.random()*500, (float)Math.random()*500);
